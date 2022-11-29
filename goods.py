@@ -36,7 +36,7 @@ print("正在打开网页......")
 driver.get('https://www.dior.cn/zh_cn/fashion')   # https://www.dior.cn/zh_cn/fashion/womens-fashion/cruise-2023-collection
 time.sleep(1)
 driver.maximize_window()   # 浏览器窗口最大化
-time.sleep(1)
+driver.implicitly_wait(5)
 # 找到搜索按钮
 search_button = driver.find_element(By.CSS_SELECTOR,'#prc-3-1 > div > header > div.desktop-header__top > nav.desktop-header__nav.open > ul > li:nth-child(1) > div > div > div')
 # 鼠标悬浮
@@ -92,10 +92,6 @@ def get_shop_info():
         for li in lis:
             print("正在定位数据......")
             driver.implicitly_wait(5)
-            # print("价格：",li.find_element(By.CLASS_NAME, 'price-line').text)
-            # print("图片链接：",li.find_element(By.CLASS_NAME,'image').find_element(By.TAG_NAME,'img').get_attribute('src'))
-            # print("店铺详情：",li.find_element(By.CLASS_NAME,'product-wrapper').get_attribute('href'))
-            # print("标题：",li.find_element(By.CLASS_NAME,'multiline-text multiline-text--is-china').text)
             li_data = []
             for i in li.text.split('\n'):
                 print(i)
