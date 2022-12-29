@@ -33,10 +33,10 @@ for i in range(2,5):
         urlimg = img4["src"]    # 获取属性值
 
         # 将图片下载到本地
-        '''r是response响应对象，stream=true是以字节流的方式读取数据，同时用于确保数据不会直接全部下载到内存中，
+        '''r是response响应对象，stream="true"是以字节流的方式读取数据，同时用于确保数据不会直接全部下载到内存中，
         便于下一步使用itre_content实现边下载边存储（因为数据太大可能会超时）
         '''
-        r = requests.get(urlimg,stream=True)
+        r = requests.get(urlimg,stream="true")
         img_name = urlimg.split("/")[-1]    # 获取图片名称
         with open(path+"/%s" % img_name, "wb") as f:    # image文件必须存在，with as便于实现文件的打开和关闭，且容易处理异常
             '''利用for循环，将响应对象response中的数据信息通过iter_content方法，依次读取大小为128字节的数据块

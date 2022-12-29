@@ -12,17 +12,22 @@ import csv
 domain_id = "shopee.co.id"
 domain_th = "shopee.co.th"
 domain_tw = "shopee.tw"
+domain_sg = "shopee.sg"
+domain_ph = "shopee.ph"
+domain_vn = "shopee.vn"
 
-# 每次切换-修改这个值
-domain = "shopee.tw"
 
 # 采集的商品地址，必须是recommend接口，爬取数据的限制修改URL中的limit值
 id_url = "https://shopee.co.id/api/v4/recommend/recommend?bundle=category_landing_page&cat_level=1&catid=11044364&limit=200&offset=0"
 th_url = "https://shopee.co.th/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=200&offset=0&view_session_id=568693e2-b6d9-4f95-9bc5-40d3f3f0b565"
 tw_url = "https://shopee.tw/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=60&offset=0&view_session_id=db749f4d-9a1a-4686-bd46-7b31261389c2"
+sg_url = "https://shopee.sg/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=100&offset=0&view_session_id=8caa27ce-30f6-4ca3-b4d1-26a2bddebbb5"
+ph_url = "https://shopee.ph/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=100&offset=0&view_session_id=180bf3de-af89-405e-bdfa-eb1b7e4181fa"
+vn_url = "https://shopee.vn/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=100&offset=0&view_session_id=86ac0010-42f8-4743-9f32-6ee6c377eba8"
 
 # 每次切换-修改这个值
-good_url = "https://shopee.tw/api/v4/recommend/recommend?bundle=daily_discover_main&item_card=3&limit=60&offset=0&view_session_id=db749f4d-9a1a-4686-bd46-7b31261389c2"
+domain = domain_vn
+good_url = vn_url
 
 
 
@@ -36,7 +41,7 @@ def getRes():
                                        '商品图片链接',
                                        '商品详情链接',
                                        '商品类目id',
-                                       '商品商品id',
+                                       '商品店铺id',
 
                                    ])
         csv_writer.writeheader()
@@ -44,7 +49,10 @@ def getRes():
         headers = {
             "authority": domain,
             "accept": "*/*",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
+            "sec-ch-ua": 'Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108',
+            "referer": "https://%s/" % domain,
+            "cookie": "SPC_F=hgQkdQfLV04bEcbmW0e63bRCBOWuNlcW; REC_T_ID=32cdfb2c-2cf3-11ed-91f9-2cea7fa51b88; SPC_R_T_ID=W7ZIeowX4MhVZstvJyfGiwUTX55asfp1R/sYDV5Og2H9anEmq2rnkCcv6usphsqGeKrvfRAq8LLYXmypFt0kmCVB9sZUO0NnZOHfwSKUM4706xMhvV+itsj/OdSxzLULUt+ZPHxYMed1XmPS5P8AGdr/cq2sZVFqhecmpagtvpU=; SPC_R_T_IV=cjQ2TGtLSUN0TGl4cDFxSw==; SPC_T_ID=W7ZIeowX4MhVZstvJyfGiwUTX55asfp1R/sYDV5Og2H9anEmq2rnkCcv6usphsqGeKrvfRAq8LLYXmypFt0kmCVB9sZUO0NnZOHfwSKUM4706xMhvV+itsj/OdSxzLULUt+ZPHxYMed1XmPS5P8AGdr/cq2sZVFqhecmpagtvpU=; SPC_T_IV=cjQ2TGtLSUN0TGl4cDFxSw==; _fbp=fb.1.1662365856278.1281250952; _tt_enable_cookie=1; _ttp=7f0ec687-1356-4fac-9e4e-1e525c0fe582; __LOCALE__null=SG; csrftoken=i4K6FyNghGLvoXO5TEKD3yFYxURx5S18; _QPWSDCXHZQA=bc98f36b-d176-4962-b9a3-678a662617c0; _med=refer; language=zhHans; G_ENABLED_IDPS=google; _gcl_au=1.1.1632386507.1670310099; SPC_SI=P6iHYwAAAABHdjVPcG9scvP59AMAAAAAblp1SEQzTnc=; _gid=GA1.2.1100490365.1670555858; _ga=GA1.1.127516175.1662365857; shopee_webUnique_ccd=CuqIYUUiy0u%2B%2BvTRpEyYLg%3D%3D%7C2BZqIHXQLwrmvUMrIr0xKsXZFxE9OP42Jj9lYekh3GAp2UfUDozg0ujxejTaQkBY4HYuz0uuJmt19z0XZK8JQCPW0Bm%2FyTgn8ZU%3D%7CgDx4io5drpX%2Fjokw%7C06%7C3; ds=c09c598eefea4bfcbfe101947d4de22f; AMP_TOKEN=%24RETRIEVING; _ga_4572B3WZ33=GS1.1.1670566262.11.1.1670566479.57.0.0; cto_bundle=8BVMKF9tTlByeiUyRmkza0xsVXpEOGNnS0NXUUVtcEhnZnd2ajVFcjNJdzdLUWZ6THBUZlFyVVV6Sk9CdVkxT1Y3dUNQMFA1MGF2S0FFclJ5RXFRa2xvS2dScUVXa3ltWDhJSDJQNEpEWXglMkJNdmxoS09MdmtSTlVrTG5RT294RTFiMWZ1OSUyRlloZVBqQnQ4NFJ3YXUzJTJCZktJS1lsVldOOEZYRlNHQjFtNiUyQlE4S3BTZjZGR3BuVTNubk5wS3FNb3BXSG1yT3M5",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
         }
         # 发起请求
         res = requests.get(url, headers=headers)
@@ -61,7 +69,10 @@ def getRes():
             for image in data['images']:
                 imagelist.append(f'https://cf.%s/file/{image}' % (domain))   # 拼接商品图片链接
             pic = "\n".join(imagelist)
-            url = f"https://%s/{data['name']}-i.{data['shopid']}.{data['itemid']}" % (domain)    # 拼接商品详情链接
+            try:
+                url = f"https://%s/{data['name']}-i.{data['shopid']}.{data['itemid']}" % (domain)    # 拼接商品详情链接
+            except Exception as e:
+                print(e)
             dict = {
                 '商品标题': title,
                 '商品最低价格': price_min,
@@ -160,7 +171,8 @@ def get_good_detail():
 
 
 if __name__ == '__main__':
-    get_good_detail()
+    # get_good_detail()
+    getRes()
 
 
 
